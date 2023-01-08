@@ -27,35 +27,17 @@ We also need to install a modified version of `remMap` (which is no longer on CR
 
 # Demo
 
-## Functions
-
-For interactive demos of the functions, please check out the vignettes built into the package. They can be accessed as follows:
+We first load all the source code dependencies:
 
 ```
-require(lolR)
-vignette('lol')
-vignette('pca')
-vignette('cpca')
-vignette('lrcca')
-vignette('mdp')
-vignette('xval')
-vignette('qoq')
-vignette('simulations')
-vignette('nearestCentroid')
+library(glmnet)
+library(glasso)
+library(psych)
+library(remMap)
 ```
 
-## Extending the lolR Package
-
-The lolR package makes many useful resources available (such as embedding and cross-validation) for simple extension. 
-
-To extend the lolR package, check out the vignettes:
+and the source code containing all the main functions:
 
 ```
-require(lolR)
-vignette('extend_embedding')
-vignette('extend_classification')
+source("DrFARM.R")
 ```
-
-# Results
-
-In this [benchmark comparison](http://docs.neurodata.io/lol/lol-paper/figures/real_data.html), we show that LOL does better than all linear embedding techniques in supervised HDLSS settings when dimensionality is high (d > 100, ntrain <= d) on 20 benchmark problems from the [UCI](https://archive.ics.uci.edu/ml/index.php) and [PMLB](https://github.com/EpistasisLab/penn-ml-benchmarks) datasets. LOL provides a good tradeoff between maintaining the class conditional difference (good misclassification rate) in a small number of dimensions (low number of embedding dimensions).
