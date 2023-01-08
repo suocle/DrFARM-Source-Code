@@ -18,7 +18,10 @@ Before using the DrFARM source code, users should have `R` version 4.0.4 or high
 First, we need to install `glmnet`, `glasso` and `psych`:  
 
     install.packages(c("glmnet", "glasso", "psych"))
+    
+which should install within a couple of minutes on a standard machine.
    
 We also need to install a modified version of `remMap` (which is no longer on CRAN) available on this repository:
 
     install.packages("remMap_0.2-0.tar.gz", repos = NULL)
+
