@@ -1,7 +1,7 @@
 # DrFARM-Source-Code
 
 ### Overview
-This repository provides a demonstration on how to use the DrFARM source code.
+This repository provides a demonstration on how to use the DrFARM `R` source code.
 
 # System Requirements
 
