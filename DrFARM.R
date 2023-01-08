@@ -397,6 +397,7 @@ precM <- function(X, method = "glasso", standardize = TRUE) {
 
 #Calculate grid for DrFARM for a given number of latent factor k
 DrFARM.grid <- function(X, Y, Theta0, precM, k,
+                        K = NULL,
                         lambda1.opt, lambda2.opt, 
                         standardize = TRUE) {
   
@@ -406,6 +407,17 @@ DrFARM.grid <- function(X, Y, Theta0, precM, k,
   if (standardize == TRUE) {
     X <- scale(X)
     Y <- scale(Y)
+  }
+  
+  #Transform X and Y if kinship matrix is used
+  if (is.null(K)) {
+    d <- rep(1, n)
+  } else {
+    eigen.res <- eigen(K)
+    U <- eigen.res$vectors
+    d <- eigen.res$values
+    X <- t(U) %*% X
+    Y <- t(U) %*% Y
   }
   
   Theta0.db.t <- t(Theta0) + t(t(Y - X %*% t(Theta0)) %*% X %*% precM) / n
@@ -423,7 +435,8 @@ DrFARM.grid <- function(X, Y, Theta0, precM, k,
 }
 
 DrFARM.one <- function(X, Y, Theta0, precM, k, 
-                       lambda1, lambda2, C = NULL,
+                       lambda1, lambda2, K = NULL,
+                       C = NULL,
                        standardize = TRUE,
                        thres = 1e-4,
                        rotate = "none",
@@ -440,6 +453,16 @@ DrFARM.one <- function(X, Y, Theta0, precM, k,
     Y <- scale(Y)
   }
   
+  #Transform X and Y if kinship matrix is used
+  if (is.null(K)) {
+    d <- rep(1, n)
+  } else {
+    eigen.res <- eigen(K)
+    U <- eigen.res$vectors
+    d <- eigen.res$values
+    X <- t(U) %*% X
+    Y <- t(U) %*% Y
+  }
   #Initialization
   
   #Debias the sparse estimator used for initial value
@@ -565,6 +588,16 @@ DrFARM.EBIC <- function(X, Y, Theta, B, E.Z, diag.Psi, standardize = TRUE,
     Y <- scale(Y)
   }
   
+  #Transform X and Y if kinship matrix is used
+  if (is.null(K)) {
+    d <- rep(1, n)
+  } else {
+    eigen.res <- eigen(K)
+    U <- eigen.res$vectors
+    d <- eigen.res$values
+    X <- t(U) %*% X
+    Y <- t(U) %*% Y
+  }
   E <- Y - X %*% t(Theta) - E.Z %*% t(B)
   
   ratio <- diag(t(E) %*% E) / diag.Psi
@@ -576,7 +609,8 @@ DrFARM.EBIC <- function(X, Y, Theta, B, E.Z, diag.Psi, standardize = TRUE,
 }
 
 DrFARM.whole <- function(X, Y, Theta0, precM, k, 
-                         lambda1.opt, lambda2.opt, C = NULL,
+                         lambda1.opt, lambda2.opt, 
+                         K = NULL, C = NULL,
                          standardize = TRUE,
                          gamma = 1,
                          thres = 1e-4,
@@ -673,7 +707,7 @@ entry.pvalue <- function(X, Y, Theta, B, E.Z, precM,
   }
   
   pval <- 2 * pnorm(-abs(Z))
-  return(pval)
+  return(t(pval))
 }
 
 pleio.pvalue <- function(X, Y, Theta, B, E.Z, precM, 
