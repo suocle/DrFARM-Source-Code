@@ -93,3 +93,6 @@ pval1
 pval2
 [1] 9.306550e-01 3.875994e-01 1.949086e-16 1.992648e-01 6.721478e-02 5.323137e-01 5.221915e-01 1.949086e-16 7.943848e-01 6.496883e-17
 ```
+
+# Simulation I replication
+In simulation I of our manuscript (which assumes the individuals to be unrelated), the debiasing-based results can be replicated by changing several parameters, namely, `n`, `p`, `q`, `k`, `tau` and varying the choice of precision matrix in `precM`: glasso (`method = "glasso"`), nodewise lasso (`method = "NL"`) and quadratic optimization (`method = "QO"`).
