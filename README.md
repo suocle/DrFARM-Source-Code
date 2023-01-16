@@ -95,4 +95,40 @@ pval2
 ```
 
 # Simulation I replication
-In simulation I of our manuscript (which assumes the individuals to be unrelated), interested users can easily re-generate a replicate of the debiasing-based results by changing several parameters from the above toy example code, namely, `n`, `p`, `q`, `k`, `tau` and varying the choice of precision matrix in `precM`: glasso (`method = "glasso"`), nodewise lasso (`method = "NL"`) and quadratic optimization (`method = "QO"`). For scenario I, use `n = 1000`, `p = 2000`, `q = 500`, `k = 5` and `tau = 4.151`; for scenario II, use `n = 2000`, `p = 5000`, `q = 1000`, `k = 10` and `tau = 3.276`. However, given the computational complexity of the problem, it is recommended to use a version of the above code broken down into parallizable pieces and use a computer cluster (e.g., array jobs) in order to achieve a faster result (see below).
+In simulation I of our manuscript (which assumes the individuals to be unrelated), interested users can easily re-generate a replicate of the debiasing-based results by changing several parameters from the above toy example code, namely, `n`, `p`, `q`, `k`, `tau`, replace line 14-22 of `SmallExample.R`:
+
+```
+idx <- matrix(c(rep(3, 3), rep(8, 2), rep(10, 4),
+                1, 2, 4, 3, 5, 1, 2, 4, 5), 9, 2)
+
+for (i in 1:9) {
+  rand <- runif(1, min = 0, max = 1) > 0.5
+  rand[rand == 0] <- -1
+  coef <- runif(1, min = 1, max = 6) * rand
+  Theta.t[idx[i,1], idx[i,2]] <- coef
+}
+```
+
+by
+
+```
+#Number of pleiotropic variants
+pv <- ##
+#Number of signals
+signal <- ##
+
+#Index of pleiotropic variants
+pv.idx <- sort(sample(1:p, pv))
+
+#Number of traits regulated per pleiotropic variant
+t.per.pv <- rmultinom(1, signal, rep(1/pv, pv))
+for (i in 1:pv) {
+  trait.idx <- sort(sample(1:q, t.per.pv[i]))
+  rand <- runif(t.per.pv[i], min = 0, max = 1) > 0.5
+  rand[rand == 0] <- -1
+  coef <- runif(t.per.pv[i], min = 1, max = 1.5) * rand
+  Theta.t[pv.idx[i], trait.idx] <- coef
+}
+```
+
+and varying the choice of precision matrix in `precM`: glasso (`method = "glasso"`), nodewise lasso (`method = "NL"`) and quadratic optimization (`method = "QO"`). For scenario I, use `n = 1000`, `p = 2000`, `q = 500`, `k = 5` and `tau = 4.151`; for scenario II, use `n = 2000`, `p = 5000`, `q = 1000`, `k = 10` and `tau = 3.276`. However, given the computational complexity of the problem, it is recommended to use a version of the above code broken down into parallizable pieces and use a computer cluster (e.g., array jobs) in order to achieve a faster result (see below).
