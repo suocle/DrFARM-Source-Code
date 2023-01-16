@@ -146,7 +146,7 @@ i <- 36
 Theta0.cand <- remMap.one(X, Y, lambda1 = remMap.lambda.grid[i,1], lambda2 = remMap.lambda.grid[i,2])
 ```
 
-Assuming we obtained all the 100 (10 x 10) initial value candidates using `remMap.one`, one possible way to select the remMap initial value is choosing the one that minimizes the extended Bayesian information criterion (EBIC). The calculation of EBIC can be done using
+Assuming we obtained all the 100 (10 x 10) initial value candidates using `remMap.one`, one possible way to select the remMap initial value is choosing the one that minimizes the extended Bayesian information criterion (EBIC). The calculation of EBIC for remMap can be done using
 
 ```
 EBIC <- remMap.EBIC(X, Y, Theta0.cand)
@@ -173,7 +173,7 @@ i <- 19
 DrFARM.one.res <- DrFARM.one(X, Y, Theta0, precM, k = 2, lambda1 = DrFARM.lambda.grid[i,1], lambda2 = DrFARM.lambda.grid[i,2])
 ```
 
-Finally, assume we obtained all the 25 (5 x 5) DrFARM sparse solution candidates using `DrFARM.one`, we can again select the sparse estimate that minimizes EBIC. The calculation of EBIC is done by
+Finally, assume we obtained all the 25 (5 x 5) DrFARM sparse solution candidates using `DrFARM.one`, we can again select the sparse estimate that minimizes EBIC. The calculation of EBIC for DrFARM is done by
 ```
 Theta <- DrFARM.one.res$Theta;
 B <- DrFARM.one.res$B; 
