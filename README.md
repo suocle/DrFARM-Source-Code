@@ -163,4 +163,21 @@ Next, assuming both the initial value `Theta0` and precision matrix `precM` are 
 DrFARM.lambda.grid <- DrFARM.grid(X, Y, Theta0, precM, k = 2, lambda1.opt = remMap.lambda.grid[i,1], lambda2.opt = remMap.lambda.grid[i,2])
 ```
 
-Notice that the tuning parameter grid generated using our method depends on the number of latent factors `k`, which is assumed to be fixed in both the toy example and simulation studies.
+Notice that the tuning parameter grid generated using our method depends on the number of latent factors `k`, which is assumed to be fixed in both the toy example and simulation studies. Then, `DrFARM.one` can be similarly applied. Below shows an example using `i = 19` (19th row of `DrFARM.lambda.grid`, which also happens to the optimal pairs of tuning parameters).
+
+
+```
+i <- 19
+
+#DrFARM estimates candidate
+DrFARM.one.res <- DrFARM.one(X, Y, Theta0, precM, k = 2, lambda1 = DrFARM.lambda.grid[i,1], lambda2 = DrFARM.lambda.grid[i,2])
+```
+
+Finally, assume we obtained all the 25 (5 x 5) DrFARM sparse solution candidates using `DrFARM.one`, we can again select the sparse estimate that minimizes EBIC. The calculation of EBIC is done by
+```
+Theta <- DrFARM.one.res$Theta;
+B <- DrFARM.one.res$B; 
+E.Z <- DrFARM.one.res$E.Z;
+diag.Psi <- DrFARM.one.res$diag.Psi;
+EBIC <- DrFARM.EBIC(X, Y, Theta, B, E.Z, diag.Psi)
+```
