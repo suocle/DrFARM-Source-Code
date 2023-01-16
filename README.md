@@ -202,4 +202,4 @@ K <- cov2cor(R %*% t(R))
 Z <- t(rmvn(k, rep(0, n), K))
 ```
 
-and changing several parameters just as in simulation I.
+and changing several parameters just as in simulation I. For scenario I, use `n = 1000`, `p = 2000`, `q = 500`, `k = 5`, `pv = 300`, `signal = 3000` and `tau = 2.891`; for scenario II, use `n = 2000`, `p = 5000`, `q = 1000`, `k = 10`, `pv = 750`, `signal = 7500` and `tau = 2.281`.
