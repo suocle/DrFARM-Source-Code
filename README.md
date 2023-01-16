@@ -55,7 +55,7 @@ source("SmallExample.R")
 
 which contains a small toy example with sample size `n = 500`, `p = 10` variants and `q = 5` traits, with 3 pleiotropic variants (variant #3, #8 and #10). For simplicity, most objects from the R environment are removed, except the main input required: `X` (`n x p` variants matrix) and `Y` (`n x q` trait matrix), as well as the ground truth `p x q` coefficient matrix `Theta.t`. Notice that there are `k = 2` underlying latent factors that contribute to the 5 traits.
 
-We estimate the initial value `Theta0` using remMap:
+We estimate the initial value `Theta0` using remMap<sup>[1]</sup>:
 ```
 remMap.res <- remMap.whole(X, Y)
 Theta0 <- remMap.res$Theta0
@@ -225,6 +225,8 @@ DrFARM.res <- DrFARM.whole(X, Y, Theta0, precM, k,
 
 ### References
 
-[1] Chan, L. S., Li, G., Fauman, E. B., Laakso, M., Boehnke, M., & Song, P. X. (2022). DrFARM: Identification and inference for pleiotropic gene in GWAS. bioRxiv.
+[1] Peng, J., Zhu, J., Bergamaschi, A., Han, W., Noh, D. Y., Pollack, J. R., & Wang, P. (2010). Regularized multivariate regression for identifying master predictors with application to integrative genomics study of breast cancer. The annals of applied statistics, 4(1), 53.
 
-[2] Chen, J., & Chen, Z. (2008). Extended Bayesian information criteria for model selection with large model spaces. Biometrika, 95(3), 759-771.
+[2] Chan, L. S., Li, G., Fauman, E. B., Laakso, M., Boehnke, M., & Song, P. X. (2022). DrFARM: Identification and inference for pleiotropic gene in GWAS. bioRxiv.
+
+[3] Chen, J., & Chen, Z. (2008). Extended Bayesian information criteria for model selection with large model spaces. Biometrika, 95(3), 759-771.
