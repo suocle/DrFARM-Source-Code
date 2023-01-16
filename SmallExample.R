@@ -23,7 +23,7 @@ for (i in 1:9) {
 
 k <- 2
 tau = 11.49
-B.star <- matrix(runif(q*k, min = 0, max = tau), q, k) #Tau = 11.49 for this simple example
+B.star <- matrix(runif(q*k, min = 0, max = tau), q, k) #tau = 11.49 for this simple example
 BBT <- B.star %*% t(B.star)
 eigen.res <- eigen(BBT)
 U <- eigen.res$vectors
