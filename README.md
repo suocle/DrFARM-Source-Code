@@ -133,3 +133,6 @@ for (i in 1:pv) {
 ```
 
 and varying the choice of precision matrix in `precM`: glasso (`method = "glasso"`), nodewise lasso (`method = "NL"`) and quadratic optimization (`method = "QO"`). For scenario I, use `n = 1000`, `p = 2000`, `q = 500`, `k = 5`, `pv = 300`, `signal = 3000` and `tau = 4.151`; for scenario II, use `n = 2000`, `p = 5000`, `q = 1000`, `k = 10`, `pv = 750`, `signal = 7500` and `tau = 3.276`. However, given the computational complexity of the problem, it is recommended to use the parallizable counterparts (`remMap.one` and `DrFARM.one`) of the key functions (`remMap.whole` and `DrFARM.whole`), and use a computer cluster (e.g., array jobs) in order to achieve a faster result (see below).
+
+# Helper functions used in parallization
+Unlike `remMap.whole` and `DrFARM.whole`, which are all-in-functions, we need to manually generate the tuning parameter grid. This can be done via the use of `remMap.grid` and `DrFARM.grid`.
