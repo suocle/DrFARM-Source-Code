@@ -151,7 +151,7 @@ i <- 36
 Theta0.cand <- remMap.one(X, Y, lambda1 = remMap.lambda.grid[i,1], lambda2 = remMap.lambda.grid[i,2])
 ```
 
-Assuming we obtained all the 100 (10 x 10) initial value candidates using `remMap.one`, one possible way to select the remMap initial value is choosing the one that minimizes the extended Bayesian information criterion (EBIC<sup>[2]</sup>). The calculation of EBIC for remMap can be done using
+Assuming we obtained all the 100 (10 x 10) initial value candidates using `remMap.one`, one possible way to select the remMap initial value is choosing the one that minimizes the extended Bayesian information criterion<sup>[2]</sup> (EBIC). The calculation of EBIC for remMap can be done using
 
 ```
 EBIC <- remMap.EBIC(X, Y, Theta0.cand)
