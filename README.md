@@ -214,7 +214,7 @@ by
 rm(list=setdiff(ls(), c("X", "Y", "Theta.t", "K)))
 ```
 
-and changing several parameters just as in simulation I. For scenario I, use `n = 1000`, `p = 2000`, `q = 500`, `k = 5`, `pv = 300`, `signal = 3000` and `tau = 2.891`; for scenario II, use `n = 2000`, `p = 5000`, `q = 1000`, `k = 10`, `pv = 750`, `signal = 7500` and `tau = 2.281`. Running DrFARM on data with kinship only requires specifying additional argument `K = K` (by default `K = NULL) in `DrFARM.grid`, `DrFARM.one`, `DrFARM.EBIC` and `DrFARM.all`. For example,
+and changing several parameters just as in simulation I. For scenario I, use `n = 1000`, `p = 2000`, `q = 500`, `k = 5`, `pv = 300`, `signal = 3000` and `tau = 2.891`; for scenario II, use `n = 2000`, `p = 5000`, `q = 1000`, `k = 10`, `pv = 750`, `signal = 7500` and `tau = 2.281`. Running DrFARM on data with kinship only requires specifying additional argument `K = K` (by default `K = NULL`) in `DrFARM.grid`, `DrFARM.one`, `DrFARM.EBIC` and `DrFARM.all`. For example,
 
 ```
 DrFARM.res <- DrFARM.whole(X, Y, Theta0, precM, k, 
