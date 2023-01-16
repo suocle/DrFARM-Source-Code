@@ -95,4 +95,4 @@ pval2
 ```
 
 # Simulation I replication
-In simulation I of our manuscript (which assumes the individuals to be unrelated), the debiasing-based results can easily be replicated by changing several parameters from the above toy example code, namely, `n`, `p`, `q`, `k`, `tau` and varying the choice of precision matrix in `precM`: glasso (`method = "glasso"`), nodewise lasso (`method = "NL"`) and quadratic optimization (`method = "QO"`).
+In simulation I of our manuscript (which assumes the individuals to be unrelated), the debiasing-based results can easily be replicated by changing several parameters from the above toy example code, namely, `n`, `p`, `q`, `k`, `tau` and varying the choice of precision matrix in `precM`: glasso (`method = "glasso"`), nodewise lasso (`method = "NL"`) and quadratic optimization (`method = "QO"`). For scenario I, use `n = 1000`, `p = 2000`, `q = 500`, `k = 5` and `tau = 4.151`; for scenario II, use `n = 2000`, `p = 5000`, `q = 1000`, `k = 10` and `tau = 3.276`.
