@@ -188,7 +188,7 @@ EBIC <- DrFARM.EBIC(X, Y, Theta, B, E.Z, diag.Psi)
 ```
 
 # Simulation II replication
-In simulation II of our manuscript<sup>[2]</sup>, the individuals are assumed to be related individuals with third-degree relatedness on average. Assuming the `mvnfast` library has been loaded, in order to generate a replicate of data for simulation II, all we need is to replace line 36 of `SmallExample.R`:
+In simulation II of our manuscript<sup>[2]</sup>, the individuals are assumed to have third-degree relatedness on average. Assuming the `mvnfast` library has been loaded, in order to generate a replicate of data for simulation II, all we need is to replace line 36 of `SmallExample.R`:
 
 ```
 Z <- matrix(rnorm(n*k), n, k)
