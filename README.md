@@ -135,7 +135,7 @@ for (i in 1:pv) {
 and varying the choice of precision matrix in `precM`: glasso (`method = "glasso"`), nodewise lasso (`method = "NL"`) and quadratic optimization (`method = "QO"`). For scenario I, use `n = 1000`, `p = 2000`, `q = 500`, `k = 5`, `pv = 300`, `signal = 3000` and `tau = 4.151`; for scenario II, use `n = 2000`, `p = 5000`, `q = 1000`, `k = 10`, `pv = 750`, `signal = 7500` and `tau = 3.276`. However, given the computational complexity of the problem, it is recommended to use the parallizable counterparts (`remMap.one` and `DrFARM.one`) of the key functions (`remMap.whole` and `DrFARM.whole`), and use a computer cluster (e.g., array jobs) in order to achieve a faster result (see below).
 
 # Helper functions used in parallization
-Unlike `remMap.whole` and `DrFARM.whole`, which are all-in-functions, we need to manually generate the tuning parameter grid. This can be done via the use of `remMap.grid` and `DrFARM.grid`. By default, `remMap.grid` generates a 10 x 10 grid (in a similar manner to how `glmnet` generate a sequence of 100 tuning parameter values) and `DrFARM.grid` generates a 5 x 5 grid (described in our manuscripts appendix). Below shows an example of remMap using `i = 36` (36th row of `remMap.lambda.grid`).
+Unlike `remMap.whole` and `DrFARM.whole`, which are all-in-functions, we need to manually generate the tuning parameter grid. This can be done via the use of `remMap.grid` and `DrFARM.grid`. By default, `remMap.grid` generates a 10 x 10 grid (in a similar manner to how `glmnet` generate a sequence of 100 tuning parameter values) and `DrFARM.grid` generates a 5 x 5 grid (described in our manuscripts appendix). Below shows an example of remMap using `i = 36` (36th row of `remMap.lambda.grid`, which also happens to the optimal pairs of tuning parameters).
 
 ```
 remMap.lambda.grid <- remMap.grid(X, Y)
@@ -156,3 +156,11 @@ By default, remMap.EBIC uses `gamma = 1` (`gamma` is a hyperparameter ranging fr
 ```
 BIC <- remMap.EBIC(X, Y, Theta0.cand, gamma = 0)
 ```
+
+Next, assuming both the initial value `Theta0` and precision matrix `precM` are available. We again generate a tuning parameter grid based on the tuning parameters of `Theta0`:
+
+```
+DrFARM.lambda.grid <- DrFARM.grid(X, Y, Theta0, precM, k = 2, lambda1.opt = remMap.lambda.grid[i,1], lambda2.opt = remMap.lambda.grid[i,2])
+```
+
+Notice that the tuning parameter grid generated using our method depends on the number of latent factors `k`, which is assumed to be fixed in both the toy example and simulation studies.
