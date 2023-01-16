@@ -100,7 +100,7 @@ pval2
 ```
 
 # Simulation I replication
-In simulation I of our manuscript (which assumes the individuals to be unrelated), interested users can easily re-generate a replicate of the debiasing-based results by changing several parameters from the above toy example code, namely, `n`, `p`, `q`, `k`, `tau`, replace line 14-22 of `SmallExample.R`:
+In simulation I of our manuscript<sup>[1]</sup> (which assumes the individuals to be unrelated), interested users can easily re-generate a replicate of the debiasing-based results by changing several parameters from the above toy example code, namely, `n`, `p`, `q`, `k`, `tau`, replace line 14-22 of `SmallExample.R`:
 
 ```
 idx <- matrix(c(rep(3, 3), rep(8, 2), rep(10, 4),
@@ -140,7 +140,7 @@ for (i in 1:pv) {
 and varying the choice of precision matrix in `precM`: glasso (`method = "glasso"`), nodewise lasso (`method = "NL"`) and quadratic optimization (`method = "QO"`). For scenario I, use `n = 1000`, `p = 2000`, `q = 500`, `k = 5`, `pv = 300`, `signal = 3000` and `tau = 4.151`; for scenario II, use `n = 2000`, `p = 5000`, `q = 1000`, `k = 10`, `pv = 750`, `signal = 7500` and `tau = 3.276`. However, given the computational complexity of the problem, it is recommended to use the parallizable counterparts (`remMap.one` and `DrFARM.one`) of the key functions (`remMap.whole` and `DrFARM.whole`), and use a computer cluster (e.g., array jobs) in order to achieve a faster result (see below).
 
 # Helper functions used in parallization
-Unlike `remMap.whole` and `DrFARM.whole`, which are all-in-functions, we need to manually generate the tuning parameter grid. This can be done via the use of `remMap.grid` and `DrFARM.grid`. By default, `remMap.grid` generates a 10 x 10 grid (in a similar manner to how `glmnet` generate a sequence of 100 tuning parameter values) and `DrFARM.grid` generates a 5 x 5 grid (described in our manuscripts appendix). Continuning our toy example from above, below shows an example of remMap using `i = 36` (36th row of `remMap.lambda.grid`, which also happens to the optimal pairs of tuning parameters).
+Unlike `remMap.whole` and `DrFARM.whole`, which are all-in-functions, we need to manually generate the tuning parameter grid. This can be done via the use of `remMap.grid` and `DrFARM.grid`. By default, `remMap.grid` generates a 10 x 10 grid (in a similar manner to how `glmnet` generate a sequence of 100 tuning parameter values) and `DrFARM.grid` generates a 5 x 5 grid (described in our manuscripts appendix<sup>[1]</sup>). Continuning our toy example from above, below shows an example of remMap using `i = 36` (36th row of `remMap.lambda.grid`, which also happens to the optimal pairs of tuning parameters).
 
 ```
 remMap.lambda.grid <- remMap.grid(X, Y)
@@ -151,7 +151,7 @@ i <- 36
 Theta0.cand <- remMap.one(X, Y, lambda1 = remMap.lambda.grid[i,1], lambda2 = remMap.lambda.grid[i,2])
 ```
 
-Assuming we obtained all the 100 (10 x 10) initial value candidates using `remMap.one`, one possible way to select the remMap initial value is choosing the one that minimizes the extended Bayesian information criterion (EBIC). The calculation of EBIC for remMap can be done using
+Assuming we obtained all the 100 (10 x 10) initial value candidates using `remMap.one`, one possible way to select the remMap initial value is choosing the one that minimizes the extended Bayesian information criterion (EBIC<sup>[2]</sup>). The calculation of EBIC for remMap can be done using
 
 ```
 EBIC <- remMap.EBIC(X, Y, Theta0.cand)
@@ -188,7 +188,7 @@ EBIC <- DrFARM.EBIC(X, Y, Theta, B, E.Z, diag.Psi)
 ```
 
 # Simulation II replication
-In simulation II of our manuscript, the individuals are assumed to be related individuals with third-degree relatedness on average. Assuming the `mvnfast` library has been loaded, in order to generate a replicate of data for simulation II, all we need is to replace line 36 of `SmallExample.R`:
+In simulation II of our manuscript<sup>[1]</sup>, the individuals are assumed to be related individuals with third-degree relatedness on average. Assuming the `mvnfast` library has been loaded, in order to generate a replicate of data for simulation II, all we need is to replace line 36 of `SmallExample.R`:
 
 ```
 Z <- matrix(rnorm(n*k), n, k)
@@ -222,3 +222,9 @@ DrFARM.res <- DrFARM.whole(X, Y, Theta0, precM, k,
                            remMap.res$lambda2.opt,
                            K = K)
 ```
+
+### References
+
+[1] Chan, L. S., Li, G., Fauman, E. B., Laakso, M., Boehnke, M., & Song, P. X. (2022). DrFARM: Identification and inference for pleiotropic gene in GWAS. bioRxiv.
+
+[2] Chen, J., & Chen, Z. (2008). Extended Bayesian information criteria for model selection with large model spaces. Biometrika, 95(3), 759-771.
