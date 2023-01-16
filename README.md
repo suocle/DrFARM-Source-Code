@@ -24,6 +24,10 @@ which should install within a couple of minutes on a standard machine.
 We also need to install a modified version of `remMap` (which is no longer on CRAN) available on this repository:
 
     install.packages("remMap_0.2-0.tar.gz", repos = NULL)
+    
+If you are interested in replicating simulation II, you will also need to install `mvnfast`:  
+
+    install.packages("mvnfast")
 
 # Demo
 
@@ -34,6 +38,7 @@ library(glmnet)
 library(glasso)
 library(psych)
 library(remMap)
+#library(mvnfast) #for replicating simulation II only
 ```
 
 and the source code containing all the main functions:
@@ -181,3 +186,20 @@ E.Z <- DrFARM.one.res$E.Z;
 diag.Psi <- DrFARM.one.res$diag.Psi;
 EBIC <- DrFARM.EBIC(X, Y, Theta, B, E.Z, diag.Psi)
 ```
+
+# Simulation II replication
+In simulation II of our manuscript, the individuals are assumed to be related individuals with third-degree relatedness on average. Assuming the `mvnfast` library has been loaded, in order to generate a replicate of data for simulation II, all we need is to replace line 36 of `SmallExample.R`:
+
+```
+Z <- matrix(rnorm(n*k), n, k)
+```
+
+by
+
+```
+R <- matrix(rbinom(n*p, size = 1, prob = 0.25), n, p, byrow = TRUE)
+K <- cov2cor(R %*% t(R))
+Z <- t(rmvn(k, rep(0, n), K))
+```
+
+and changing several parameters just as in simulation I.
